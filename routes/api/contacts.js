@@ -1,24 +1,34 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-router.get('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+const {
+  validationCreateContact,
+  validationUpdateContact,
+  validationUpdateStatusContact,
+  validateMongoId,
+} = require('./validation');
+const { contacts: ctrl } = require('../../controllers');
 
-router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.get('/', ctrl.getAllContacts);
 
-router.post('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.get('/:contactId', validateMongoId, ctrl.getByIdContact);
 
-router.delete('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.post('/', validationCreateContact, ctrl.addContact);
 
-router.patch('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.delete('/:contactId', validateMongoId, ctrl.removeContact);
 
-module.exports = router
+router.put(
+  '/:contactId',
+  validateMongoId,
+  validationUpdateContact,
+  ctrl.updateContact,
+);
+
+router.patch(
+  '/:contactId/favorite',
+  validateMongoId,
+  validationUpdateStatusContact,
+  ctrl.updateStatusContact,
+);
+
+module.exports = router;
