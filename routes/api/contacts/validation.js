@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
+const { validation }=require('../../../middlewares/validation');
 
 const schemaCreateContact = Joi.object({
   name: Joi.string()
@@ -25,22 +26,10 @@ const schemaUpdateContact = Joi.object({
 const schemaUpdateStatusContact = Joi.object({
   favorite: Joi.boolean().required(),
 });
-
-const validate = async (schema, obj, next) => {
-  try {
-    await schema.validateAsync(obj);
-    next();
-  } catch (err) {
-    next({
-      status: 400,
-      message: err.message,
-    });
-  }
-};
 module.exports = {
   validationCreateContact: (req, res, next) => {
     if ('name' in req.body && 'email' in req.body && 'phone' in req.body) {
-      return validate(schemaCreateContact, req.body, next);
+      return validation(schemaCreateContact, req.body, next);
     }
     return res.status(400).json({
       status: 'error',
@@ -50,11 +39,13 @@ module.exports = {
   },
   validationUpdateContact: (req, res, next) => {
     if (Object.keys(req.body).length === 0) {
-      return res
-        .status(400)
-        .json({ status: 'error', code: 400, message: 'Missing fields' });
+      return res.status(400).json({
+        status: 'error',
+        code: 400,
+        message: 'Missing fields',
+      });
     }
-    return validate(schemaUpdateContact, req.body, next);
+    return validation(schemaUpdateContact, req.body, next);
   },
   validationUpdateStatusContact: (req, res, next) => {
     if (Object.keys(req.body).length === 0) {
@@ -64,7 +55,7 @@ module.exports = {
         message: 'Missing field favorite',
       });
     }
-    return validate(schemaUpdateStatusContact, req.body, next);
+    return validation(schemaUpdateStatusContact, req.body, next);
   },
 
   validateMongoId: (req, _res, next) => {
