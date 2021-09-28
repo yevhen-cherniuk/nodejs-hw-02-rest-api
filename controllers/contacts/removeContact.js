@@ -2,7 +2,8 @@ const Contacts = require('../../repositories/contacts');
 
 const removeContact = async (req, res, next) => {
   try {
-    const contact = await Contacts.removeContact(req.params.contactId);
+    const userId = req.user.id;
+    const contact = await Contacts.removeContact(userId,  req.params.contactId);
     if (contact) {
       return res.status(200).json({
         status: 'success',

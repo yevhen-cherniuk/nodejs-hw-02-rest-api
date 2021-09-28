@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
-const { validation }=require('../../../middlewares/validation');
+const { validate }=require('../../../middlewares/validation');
 
 const schemaCreateContact = Joi.object({
   name: Joi.string()
@@ -29,7 +29,7 @@ const schemaUpdateStatusContact = Joi.object({
 module.exports = {
   validationCreateContact: (req, res, next) => {
     if ('name' in req.body && 'email' in req.body && 'phone' in req.body) {
-      return validation(schemaCreateContact, req.body, next);
+      return validate(schemaCreateContact, req.body, next);
     }
     return res.status(400).json({
       status: 'error',
@@ -45,7 +45,7 @@ module.exports = {
         message: 'Missing fields',
       });
     }
-    return validation(schemaUpdateContact, req.body, next);
+    return validate(schemaUpdateContact, req.body, next);
   },
   validationUpdateStatusContact: (req, res, next) => {
     if (Object.keys(req.body).length === 0) {
@@ -55,7 +55,7 @@ module.exports = {
         message: 'Missing field favorite',
       });
     }
-    return validation(schemaUpdateStatusContact, req.body, next);
+    return validate(schemaUpdateStatusContact, req.body, next);
   },
 
   validateMongoId: (req, _res, next) => {

@@ -2,7 +2,9 @@ const Contacts = require('../../repositories/contacts');
 
 const updateContact = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const contact = await Contacts.updateContact(
+      userId,
       req.params.contactId,
       req.body,
     );

@@ -1,7 +1,13 @@
-const validation = require('./validation')
+const validate = require('./validation')
 const authenticate = require('./authenticate')
+const createFolderIsNotExist = require('./createFolder')
+const limiterAPI = require('./limiterApi')
+const upload = require("./upload")
 
 module.exports = {
-  validation,
+  validate,
   authenticate,
+  createFolderIsNotExist,
+  limiterAPI,
+  upload,
 }

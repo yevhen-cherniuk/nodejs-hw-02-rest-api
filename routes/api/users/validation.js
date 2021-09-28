@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { validation } = require('../../../middlewares/validation');
+const { validate } = require('../../../middlewares/validation');
 
 const schemaPаramsrUser = Joi.object({
   password: Joi.string()
@@ -16,7 +16,7 @@ const schemaSubscriptionUser = Joi.object({
 module.exports = {
   validationPаramsUser: (req, res, next) => {
     if ('password' in req.body && 'email' in req.body) {
-      return validation(schemaPаramsrUser, req.body, next);
+      return validate(schemaPаramsrUser, req.body, next);
     }
     return res.status(400).json({
       status: 'error',
@@ -25,8 +25,8 @@ module.exports = {
     });
   },
   validationSubscriptionUser: (req, res, next) => {
-    if (['starter', 'pro', 'business'].includes(req.body.subscription)) {
-      return validation(schemaSubscriptionUser, req.body, next);
+  if (['starter', 'pro', 'business'].includes(req.body.subscription)) {
+      return validate(schemaSubscriptionUser, req.body, next);
     }
     return res.status(400).json({
       status: 'error',
