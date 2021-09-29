@@ -25,7 +25,5 @@ passport.use(
         done(error, false);
       }
     },
-
-    // or you could create a new account
   ),
 );

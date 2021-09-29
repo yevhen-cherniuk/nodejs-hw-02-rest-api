@@ -6,6 +6,7 @@ const { upload } = require('../../../middlewares');
 const {
   validationPаramsUser,
   validationSubscriptionUser,
+   validationVerificationEmail,
 } = require('./validation');
 
 const { users: ctrl } = require('../../../controllers');
@@ -16,5 +17,7 @@ router.post('/signup', validationPаramsUser, ctrl.register);
 router.post('/login', validationPаramsUser, ctrl.login);
 router.post('/logout', authenticate, ctrl.logout);
 router.get('/current', authenticate, ctrl.current);
+router.get('/verify/:verificationToken', ctrl.verify);
+router.post('/verify', validationVerificationEmail, ctrl.repeatEmailVerify);
 
 module.exports = router;

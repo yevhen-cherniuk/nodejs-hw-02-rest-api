@@ -3,7 +3,10 @@ const login = require('./login');
 const logout = require('./logout');
 const current = require('./current');
 const subscriptionUpdate = require('./subscriptionUpdate');
-const avatars = require('./avatars')
+const avatars = require('./avatars');
+const verify = require('./verify');
+const repeatEmailVerify = require('./repeatEmailVerify');
+
 
 module.exports = {
   register,
@@ -12,4 +15,6 @@ module.exports = {
   current,
   subscriptionUpdate,
   avatars,
+  verify,
+  repeatEmailVerify
 };
