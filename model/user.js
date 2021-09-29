@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const { v4: uuid } = require('uuid');
 
 const userSchema = new Schema(
   {
